@@ -35,10 +35,12 @@ function! s:immobile(seq)
 endfunction
 
 function! s:trailer()
-  augroup slash
-    autocmd!
-    autocmd CursorMoved,CursorMovedI * set nohlsearch | autocmd! slash
-  augroup END
+  if get(g:, 'slash_clear')
+    augroup slash
+      autocmd!
+      autocmd CursorMoved,CursorMovedI * set nohlsearch | autocmd! slash
+    augroup END
+  endif
 
   let seq = foldclosed('.') != -1 ? 'zo' : ''
   if exists('s:winline')
